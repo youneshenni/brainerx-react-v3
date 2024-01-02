@@ -1,31 +1,35 @@
 import PropTypes from "prop-types";
-export default function App() {
-  function incrementClicks() {
-    const clickCountElement = document.getElementById("clickCount");
-    clickCountElement.textContent = parseInt(clickCountElement.textContent) + 1;
-  }
-  function resetClicks() {
-    const clickCountElement = document.getElementById("clickCount");
-    clickCountElement.textContent = 0;
-  }
+import { useEffect, useState } from "react";
+import "./App.css";
 
-  function decrementClicks() {
-    const clickCountElement = document.getElementById("clickCount");
-    clickCountElement.textContent = parseInt(clickCountElement.textContent) - 1;
-  }
+const buttonStyles = {
+  backgroundColor: "blue",
+};
+export default function App() {
+  const [clickCount, setClickCount] = useState(0);
+  const [secondClick, setSecondClick] = useState(0);
+  useEffect(() => {
+    console.log("useEffect called");
+    return () => {
+      console.log("useEffect cleanup");
+    };
+  }, [clickCount]);
   return (
     <div>
       <h1>Hello, world!</h1>
-      <p>
-        Your buttons have been clicked <span id="clickCount">0</span> times
-      </p>
-      <Button onClick={incrementClicks} alertText="WELCOME">
+      <p>Your buttons have been clicked {clickCount} times</p>
+      <h3>Total clicks: {secondClick}</h3>
+      <Button onClick={() => setClickCount(clickCount + 1)} alertText="WELCOME">
         Increment
       </Button>
-      <Button onClick={decrementClicks} alertText="SE">
+      <Button onClick={() => setSecondClick(secondClick + 1)} alertText="SE">
         Decrement
       </Button>
-      <Button onClick={resetClicks} alertText="SE">
+      <Button
+        style={{ color: "yellow" }}
+        onClick={() => setClickCount(0)}
+        className="SE"
+      >
         Reset
       </Button>
     </div>
@@ -33,12 +37,14 @@ export default function App() {
 }
 
 function Button(props) {
-  const { children, onClick } = props;
+  const { children, onClick, style, className } = props;
   return (
     <button
+      style={{ ...buttonStyles, ...style }}
       onClick={() => {
         onClick();
       }}
+      className={className}
     >
       {children}
     </button>
