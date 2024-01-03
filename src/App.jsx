@@ -26,6 +26,9 @@ export default function App() {
         onDelete={(id) => {
           UserService.deleteUser(id).then(getUsers);
         }}
+        onUpdate={(updatedUser) =>
+          UserService.updateUser(updatedUser.id, updatedUser).then(getUsers)
+        }
       />
     </div>
   );

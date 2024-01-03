@@ -17,6 +17,15 @@ const UserService = {
 
   deleteUser: (id) =>
     fetch(`http://193.70.113.26:3000/${id}`, { method: "DELETE" }),
+
+  updateUser: (id, user) =>
+    fetch(`http://193.70.113.26:3000/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }),
 };
 
 export default UserService;
