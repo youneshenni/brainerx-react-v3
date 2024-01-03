@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-const Table = ({ data }) => (
+const Table = ({ data, onDelete }) => (
   <table>
     <thead>
       <tr>
@@ -7,6 +7,7 @@ const Table = ({ data }) => (
         <th>Last name</th>
         <th>Email</th>
         <th>Gender</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,9 @@ const Table = ({ data }) => (
           <td>{person.last_name}</td>
           <td>{person.email}</td>
           <td>{person.gender}</td>
+          <td>
+            <button onClick={() => onDelete(person.id)}>Delete</button>
+          </td>
         </tr>
       ))}
     </tbody>
@@ -24,6 +28,7 @@ const Table = ({ data }) => (
 
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Table;

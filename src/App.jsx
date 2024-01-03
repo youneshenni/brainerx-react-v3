@@ -21,7 +21,12 @@ export default function App() {
           UserService.postUser(createdUser).then(getUsers);
         }}
       />
-      <Table data={data} />
+      <Table
+        data={data}
+        onDelete={(id) => {
+          UserService.deleteUser(id).then(getUsers);
+        }}
+      />
     </div>
   );
 }

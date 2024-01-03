@@ -14,6 +14,9 @@ const UserService = {
       body: JSON.stringify(user),
     });
   },
+
+  deleteUser: (id) =>
+    fetch(`http://193.70.113.26:3000/${id}`, { method: "DELETE" }),
 };
 
 export default UserService;
