@@ -8,7 +8,7 @@ export default function App() {
   const [data, setData] = useState([]);
 
   function getUsers() {
-    UserService.getUsers().then((data) => setData(data));
+    UserService.getUsers().then(setData);
   }
 
   useEffect(() => {

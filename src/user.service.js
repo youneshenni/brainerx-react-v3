@@ -1,11 +1,11 @@
-export default class UserService {
-  static async getUsers() {
+const UserService = {
+  getUsers: async () => {
     const response = await fetch("http://193.70.113.26:3000/");
     const data = await response.json();
     return data;
-  }
+  },
 
-  static postUser(user) {
+  postUser: (user) => {
     return fetch("http://193.70.113.26:3000/", {
       method: "POST",
       headers: {
@@ -13,5 +13,7 @@ export default class UserService {
       },
       body: JSON.stringify(user),
     });
-  }
-}
+  },
+};
+
+export default UserService;
