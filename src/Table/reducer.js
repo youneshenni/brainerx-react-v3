@@ -24,8 +24,8 @@ export default function tableReducer(state, { type, payload }) {
     case "setEditingRow": {
       return {
         ...state,
-        editingRow: payload,
-        editingUser: state.users.find((user) => user.id === payload),
+        editingRow: payload.id,
+        editingUser: payload,
       };
     }
     default:

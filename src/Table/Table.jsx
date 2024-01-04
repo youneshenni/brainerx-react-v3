@@ -1,11 +1,18 @@
 import PropTypes from "prop-types";
-import { useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import tableReducer, { initialState } from "./reducer";
 const Table = ({ data, onDelete, onUpdate, isGreen }) => {
   const [{ editingRow, editingUser }, dispatch] = useReducer(
     tableReducer,
     initialState
   );
+  const genderRef = useRef(null);
+
+  useEffect(() => {
+    if (editingRow) {
+      genderRef.current.focus();
+    }
+  }, [editingRow]);
   return (
     <table style={{ backgroundColor: isGreen ? "green" : "red" }}>
       <thead>
@@ -34,6 +41,7 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
                       },
                     })
                   }
+                  ref={genderRef}
                   value={editingUser?.first_name}
                 />
               </td>
@@ -108,7 +116,7 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
               <td>
                 <button
                   onClick={() => {
-                    dispatch({ type: "setEditingRow", payload: person.id });
+                    dispatch({ type: "setEditingRow", payload: person });
                   }}
                 >
                   Update
