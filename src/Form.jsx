@@ -1,6 +1,16 @@
 import PropTypes from "prop-types";
+import { useContext, useEffect, useRef } from "react";
+import { UserContext } from "./context/user_context";
 
 const Form = ({ onSubmit }) => {
+  const { users: data } = useContext(UserContext);
+
+  useEffect(() => {
+    if (data?.length) inputRef.current.focus();
+  }, [data]);
+
+  const inputRef = useRef(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -14,7 +24,7 @@ const Form = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="first_name" />
+      <input type="text" ref={inputRef} name="first_name" />
       <input type="text" name="last_name" />
       <input type="text" name="email" />
       <input type="text" name="gender" />
