@@ -1,35 +1,13 @@
 import { useState } from "react";
-import Table from "./Table";
-import { useEffect } from "react";
-import UserService from "./user.service";
-import Form from "./Form";
+import UsersTable from "./UsersTable";
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const [page, setPage] = useState(false);
 
-  function getUsers() {
-    UserService.getUsers().then(setData);
-  }
-
-  useEffect(() => {
-    getUsers();
-  }, []);
   return (
     <div>
-      <Form
-        onSubmit={(createdUser) => {
-          UserService.postUser(createdUser).then(getUsers);
-        }}
-      />
-      <Table
-        data={data}
-        onDelete={(id) => {
-          UserService.deleteUser(id).then(getUsers);
-        }}
-        onUpdate={(updatedUser) =>
-          UserService.updateUser(updatedUser.id, updatedUser).then(getUsers)
-        }
-      />
+      <button onClick={() => setPage(!page)}>Change page</button>
+      {page ? <UsersTable key={true} /> : <UsersTable key={false} />}
     </div>
   );
 }
