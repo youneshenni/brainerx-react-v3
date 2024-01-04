@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useReducer } from "react";
+import tableReducer, { initialState } from "./reducer";
 const Table = ({ data, onDelete, onUpdate, isGreen }) => {
-  const [editingRow, setEditingRow] = useState(null);
-  const [editingUser, setEditingUser] = useState(null);
-
+  const [{ editingRow, editingUser }, dispatch] = useReducer(
+    tableReducer,
+    initialState
+  );
   return (
     <table style={{ backgroundColor: isGreen ? "green" : "red" }}>
       <thead>
@@ -24,9 +26,12 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
                 <input
                   type="text"
                   onChange={(e) =>
-                    setEditingUser({
-                      ...editingUser,
-                      first_name: e.target.value,
+                    dispatch({
+                      type: "editUser",
+                      payload: {
+                        key: "first_name",
+                        value: e.target.value,
+                      },
                     })
                   }
                   value={editingUser?.first_name}
@@ -36,9 +41,12 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
                 <input
                   type="text"
                   onChange={(e) =>
-                    setEditingUser({
-                      ...editingUser,
-                      last_name: e.target.value,
+                    dispatch({
+                      type: "editUser",
+                      payload: {
+                        key: "last_name",
+                        value: e.target.value,
+                      },
                     })
                   }
                   value={editingUser?.last_name}
@@ -48,7 +56,13 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
                 <input
                   type="text"
                   onChange={(e) =>
-                    setEditingUser({ ...editingUser, email: e.target.value })
+                    dispatch({
+                      type: "editUser",
+                      payload: {
+                        key: "email",
+                        value: e.target.value,
+                      },
+                    })
                   }
                   value={editingUser?.email}
                 />
@@ -57,7 +71,13 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
                 <input
                   type="text"
                   onChange={(e) =>
-                    setEditingUser({ ...editingUser, gender: e.target.value })
+                    dispatch({
+                      type: "editUser",
+                      payload: {
+                        key: "gender",
+                        value: e.target.value,
+                      },
+                    })
                   }
                   value={editingUser?.gender}
                 />
@@ -69,8 +89,7 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
                 <button
                   onClick={() => {
                     onUpdate(editingUser);
-                    setEditingRow(null);
-                    setEditingUser(null);
+                    dispatch({ type: "clearEditingUser" });
                   }}
                 >
                   Save
@@ -89,8 +108,7 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
               <td>
                 <button
                   onClick={() => {
-                    setEditingRow(person.id);
-                    setEditingUser(person);
+                    dispatch({ type: "setEditingRow", payload: person.id });
                   }}
                 >
                   Update

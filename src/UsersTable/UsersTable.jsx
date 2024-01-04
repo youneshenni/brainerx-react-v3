@@ -1,6 +1,6 @@
-import Table from "../Table";
+import Table from "../Table/Table";
 import Form from "../Form";
-import { useContext, useMemo, useReducer, useState } from "react";
+import { useContext, useMemo, useReducer } from "react";
 import { UserContext } from "../context/user_context";
 import Filter from "../Filter";
 import reducer, { initialState } from "./reducer";
