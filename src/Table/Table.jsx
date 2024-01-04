@@ -27,7 +27,7 @@ const Table = ({ data, onDelete, onUpdate, isGreen }) => {
       </thead>
       <tbody>
         {data.map((person, index) =>
-          editingRow === person.id ? (
+          editingRow === person.id && editingRow ? (
             <tr key={index}>
               <td>
                 <input
