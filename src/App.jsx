@@ -1,5 +1,5 @@
 import { useState } from "react";
-import UsersTable from "./UsersTable";
+import UsersTable from "./UsersTable/UsersTable";
 
 export default function App() {
   const [page, setPage] = useState(false);

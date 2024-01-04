@@ -1,8 +1,9 @@
-import Table from "./Table";
-import Form from "./Form";
-import { useContext, useMemo, useState } from "react";
-import { UserContext } from "./context/user_context";
-import Filter from "./Filter";
+import Table from "../Table";
+import Form from "../Form";
+import { useContext, useMemo, useReducer, useState } from "react";
+import { UserContext } from "../context/user_context";
+import Filter from "../Filter";
+import reducer, { initialState } from "./reducer";
 
 export default function UsersTable() {
   const {
@@ -11,8 +12,7 @@ export default function UsersTable() {
     deleteUser,
     updateUser,
   } = useContext(UserContext);
-  const [filter, setFilter] = useState("");
-  const [isGreen, setIsGreen] = useState(false);
+  const [{ isGreen, filter }, dispatch] = useReducer(reducer, initialState);
 
   const displayableData = useMemo(
     () =>
@@ -24,8 +24,12 @@ export default function UsersTable() {
 
   return (
     <div>
-      <button onClick={() => setIsGreen(!isGreen)}>Change color</button>
-      <Filter onChange={(filter) => setFilter(filter)} />
+      <button onClick={() => dispatch({ type: "changeColor" })}>
+        Change color
+      </button>
+      <Filter
+        onChange={(filter) => dispatch({ type: "setFilter", payload: filter })}
+      />
       <Form onSubmit={createUser} />
       <Table
         data={displayableData}
