@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-const Table = ({ data, onDelete, onUpdate }) => {
+const Table = ({ data, onDelete, onUpdate, isGreen }) => {
   const [editingRow, setEditingRow] = useState(null);
   const [editingUser, setEditingUser] = useState(null);
 
   return (
-    <table>
+    <table style={{ backgroundColor: isGreen ? "green" : "red" }}>
       <thead>
         <tr>
           <th>First name</th>
@@ -108,6 +108,7 @@ Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  isGreen: PropTypes.bool,
 };
 
 export default Table;
